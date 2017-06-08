@@ -1,2 +1,6 @@
-wipo-alpha/
-wipo-alpha.rar
+code/
+get_routes.py
+*.txt
+output_file.py
+*.pyc
+
