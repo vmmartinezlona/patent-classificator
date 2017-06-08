@@ -6,9 +6,9 @@ Created on Thu May 18 11:29:15 2017
 @author: jaime
 """
 
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
+from sklearn import metrics
 import numpy as np
 import time
 
@@ -50,11 +50,9 @@ def read_data(file, data, labels_list, label_names):
     #print (labels_list)
 
 # Directorios
-main_dir = '/home/tsukimo/Documents/patent-classificator/'
+main_dir = '/home/jaime/BACKUP/Docs/DataMining/project/'
 train_file = main_dir + 'patents_train.txt'
 test_file = main_dir + 'patents_test.txt'
-# # Para etiquetas (por sección y clase)
-train_labels_name = []
 
 #________________________________________________________________ Datos de entrenamiento
 # # Variables para guardar los datos y las etiquetas para clasificar.
@@ -119,3 +117,11 @@ with open(output_file, 'w', encoding = 'UTF-8') as file:
 #________________________________________________________________ Escribir resultados
 #f = open("output.txt", "w")
 #f.write('Class: ' + names[index] + str(predicted_nb[index])+'\n')
+
+print('\n Accuracy = ' + str(np.mean(predicted_nb == test_labels)))
+print('\nconfusion matrix:')
+print(metrics.confusion_matrix(test_labels, predicted_nb))
+print('\nPerformance:')
+print(metrics.classification_report(test_labels, predicted_nb, target_names=label_names))
+print('\n\n')
+print('Training + test_time = ' + str(stop-start))
