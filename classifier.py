@@ -91,10 +91,9 @@ stop = time.time()
 
 
 #Matriz de probabilidades
-#section_labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 predicted_prob = classifier_nb.predict_proba(test_corpus_fit)
 num_test_file = predicted_nb.size
-#Crea el archivo de salida
+
 output_file = main_dir + 'output.txt'
 #Arreglo para guardar el identificador de patente
 Id = []
@@ -106,16 +105,16 @@ with open(test_file, 'r', encoding = 'UTF-8') as test:
 #Llenar el archivo de salida
 with open(output_file, 'w', encoding = 'UTF-8') as file:
     for num in range(0, num_test_file):
-        # Obtener los indices de los 3 elementos mayores
+        # Obtener los indices de los 3 elementos con mayor fitness
         sort_index = np.argsort(predicted_prob[num][:])[::-1][:3]
         #Escribir la el identidicador de patente
-        file.write(str(Id[num]))
-        file.write(' ')
+        data_tuple = str(Id[num]) + ' '
         for num2 in sort_index:
-            prob = train_labels_name[num2]
-            file.write(prob)
-            file.write(' ')
-        file.write('\n')
+            #Escribir las 3 clasificaciones con mayor fitness
+            predict_label = train_labels_name[num2]
+            data_tuple += predict_label + ' '
+        data_tuple += '\n'
+        file.write(data_tuple)
 
 #________________________________________________________________ Escribir resultados
 #f = open("output.txt", "w")
